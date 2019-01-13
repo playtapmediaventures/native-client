@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "react-app-rewired start --scripts-version react-scripts",
-    "build": "react-app-rewired build --scripts-version react-scripts && cat build/bundle.js build/static/js/*.chunk.js > build/msclvr-native.min.js && gzip -9 build/msclvr-native.min.js && mv build/msclvr-native.min.js.gz build/msclvr-native.min.js && rm -fR build/static",
+    "start:prod": "serve -s build",
+    "build": "GENERATE_SOURCEMAP=false react-app-rewired build --scripts-version react-scripts",
     "test": "react-app-rewired test --scripts-version react-scripts",
     "eject": "react-scripts eject",
     "storybook": "start-storybook -p 9001 -c .storybook"
@@ -91,6 +92,7 @@
     "@babel/core": "^7.2.2",
     "@storybook/react": "^4.1.6",
     "babel-loader": "8.0.4",
+    "compression-webpack-plugin": "^2.0.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-config-prettier": "^3.3.0",
     "eslint-plugin-import": "^2.14.0",

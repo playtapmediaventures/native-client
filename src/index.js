@@ -49,10 +49,10 @@ const initialize = async () => {
   };
 
   window.addEventListener('resize', () => {
-    render(container.width);
+    render(container.offsetWidth);
   });
 
-  render(container.width);
+  render(container.offsetWidth);
 };
 
 initialize();

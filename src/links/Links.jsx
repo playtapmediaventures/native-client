@@ -2,18 +2,18 @@ import React from 'react';
 
 import Link from './Link';
 
-const calculateResizeStyles = (allowedWidth, length) => {
+const calculateResizeStyles = (allowedWidth = 1320, length) => {
   const width = 220;
   const maxPossibleCols = Math.floor(allowedWidth / width);
   const possibilities = [1, 2, 3, 6];
   const acceptableCols = possibilities.filter(p => length % p === 0 && p <= maxPossibleCols && p);
-  const colsToUse = Math.max(...acceptableCols);
+  const colsToUse = acceptableCols.pop();
   const realWidth = colsToUse * width;
   const remainder = allowedWidth - realWidth;
 
   return {
-    pxWidth: `${realWidth}px`,
-    pxMarginLeft: `${remainder / 2}px`
+    width: `${realWidth}px`,
+    marginLeft: `${remainder / 2}px`
   };
 };
 

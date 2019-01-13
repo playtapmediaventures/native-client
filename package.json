@@ -7,14 +7,7 @@
     "build": "react-app-rewired build --scripts-version react-scripts && cat build/bundle.js build/static/js/*.chunk.js > build/msclvr-native.min.js && rm -fR build/static",
     "test": "react-app-rewired test --scripts-version react-scripts",
     "eject": "react-scripts eject",
-    "storybook": "start-storybook -p 9001 -c .storybook",
-    "lint-staged": {
-      "*.{js,jsx}": [
-        "pretty-quick --staged",
-        "eslint src/ --fix",
-        "git add"
-      ]
-    }
+    "storybook": "start-storybook -p 9001 -c .storybook"
   },
   "eslintConfig": {
     "env": {
@@ -75,6 +68,18 @@
     "not ie <= 11",
     "not op_mini all"
   ],
+  "husky": {
+    "hooks": {
+      "pre-commit": "NODE_ENV=production lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,jsx}": [
+      "pretty-quick --staged",
+      "eslint src/ --fix",
+      "git add"
+    ]
+  },
   "dependencies": {
     "axios": "^0.18.0",
     "axios-jsonp": "^1.0.2",
@@ -97,10 +102,5 @@
     "prettier": "^1.15.3",
     "pretty-quick": "^1.8.0",
     "react-app-rewired": "^2.0.1"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "NODE_ENV=production lint-staged"
-    }
   }
 }

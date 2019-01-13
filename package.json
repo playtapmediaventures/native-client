@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "precommit": "NODE_ENV=production lint-staged",
     "start": "react-app-rewired start --scripts-version react-scripts",
     "build": "react-app-rewired build --scripts-version react-scripts && cat build/bundle.js build/static/js/*.chunk.js > build/msclvr-native.min.js && rm -fR build/static",
     "test": "react-app-rewired test --scripts-version react-scripts",
@@ -98,5 +97,10 @@
     "prettier": "^1.15.3",
     "pretty-quick": "^1.8.0",
     "react-app-rewired": "^2.0.1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "NODE_ENV=production lint-staged"
+    }
   }
 }

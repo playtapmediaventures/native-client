@@ -2,12 +2,9 @@ import axios from 'axios';
 import jsonpAdapter from 'axios-jsonp';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Links } from './links';
 
-const container = document.getElementById('msclvr');
-const {
-  dataset: { pid }
-} = container;
+import getPublisherId from './util/get-publisher-id';
+import { Links } from './links';
 
 const getOptions = async () => {
   const endpoint = 'https://msclvr.co/native/links';
@@ -55,12 +52,17 @@ const initialize = async () => {
   render(container.offsetWidth);
 };
 
-initialize();
+const initializeTestEnvironments = () => {
+  // eslint-disable-next-line no-restricted-globals
+  if (location.host.match(/(localhost|msclvr\.co)/)) {
+    const MSCLVR = {
+      initialize
+    };
+    window.MSCLVR = MSCLVR;
+  }
+};
 
-// eslint-disable-next-line no-restricted-globals
-if (location.host.match(/(localhost|msclvr\.co)/)) {
-  const MSCLVR = {
-    initialize
-  };
-  window.MSCLVR = MSCLVR;
-}
+let pid = getPublisherId();
+const container = document.getElementById('msclvr');
+initialize();
+initializeTestEnvironments();

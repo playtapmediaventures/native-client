@@ -1,4 +1,5 @@
 import React from 'react';
+import { withResizeDetector } from 'react-resize-detector';
 
 import Link from './Link';
 
@@ -17,9 +18,10 @@ const calculateResizeStyles = (allowedWidth = 1320, length) => {
   };
 };
 
-const Links = ({ pid, containerWidth, options }) => {
+const Links = ({ pid, width, options }) => {
   const { length } = options;
-  const resizeStyles = calculateResizeStyles(containerWidth, length);
+
+  const resizeStyles = calculateResizeStyles(width, length);
 
   return (
     <div
@@ -48,15 +50,15 @@ const Links = ({ pid, containerWidth, options }) => {
             width: '100px',
             height: '20px'
           }}
-          src="/native/img/powered_by_msclvr.png"
+          src="https://msclvr.co/native/img/powered_by_msclvr.png"
           alt="Powered by MSCLVR"
         />
       </p>
-      {options.map(option => (
-        <Link key={JSON.stringify(option)} pid={pid} {...option} />
+      {options.map((option, index) => (
+        <Link key={JSON.stringify(option)} pid={pid} position={index + 1} {...option} />
       ))}
     </div>
   );
 };
 
-export default Links;
+export default withResizeDetector(Links);

@@ -1,55 +1,17 @@
-import axios from 'axios';
-import jsonpAdapter from 'axios-jsonp';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
 import getPublisherId from './util/get-publisher-id';
+import getOptions from './service/get-options';
 import { Links } from './links';
 
-const getOptions = async () => {
-  const endpoint = 'https://msclvr.co/native/links';
-  const {
-    dataset: { url = 'default', ip }
-  } = container;
-  const queryParams = {
-    url,
-    pid
-  };
-  if (ip) {
-    queryParams.ip = ip;
-  }
+const initialize = async (
+  pid = getPublisherId(),
+  container = document.getElementById('msclvr')
+) => {
+  const options = await getOptions(pid, container);
 
-  let options = [];
-  try {
-    const response = await axios({
-      adapter: jsonpAdapter,
-      url: endpoint,
-      params: queryParams
-    });
-
-    ({ data: options } = response);
-  } catch (e) {
-    // eslint-disable-next-line no-console
-    console.error(url, queryParams, e.toString());
-  }
-  return options;
-};
-
-const initialize = async () => {
-  const options = await getOptions();
-
-  const render = containerWidth => {
-    ReactDOM.render(
-      <Links pid={pid} containerWidth={containerWidth} options={options} />,
-      container
-    );
-  };
-
-  window.addEventListener('resize', () => {
-    render(container.offsetWidth);
-  });
-
-  render(container.offsetWidth);
+  ReactDOM.render(<Links pid={pid} options={options} />, container);
 };
 
 const initializeTestEnvironments = () => {
@@ -62,7 +24,5 @@ const initializeTestEnvironments = () => {
   }
 };
 
-let pid = getPublisherId();
-const container = document.getElementById('msclvr');
 initialize();
 initializeTestEnvironments();

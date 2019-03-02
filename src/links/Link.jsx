@@ -1,21 +1,41 @@
 import React from 'react';
 
-const Link = ({ pid, href, offer_id: offerId, img, head, loc, sub }) => (
-  <a href={`${href}?pid=${pid}`} style={{ textDecoration: 'none' }}>
+const Link = ({ pid, href, offer_id: offerId, img, head, loc, position, sub }) => {
+  const handleClick = () => {
+    navigate();
+  };
+
+  const handleKeyPress = ({ keyCode, which }) => {
+    const key = keyCode || which;
+    if (key === 13 || key === 32) {
+      navigate();
+    }
+  };
+
+  const navigate = () => {
+    window.location.href = `${href}?pid=${pid}`;
+  };
+
+  return (
     <div
       className="msclvrLinkItem"
       key={offerId}
+      onClick={handleClick}
+      onKeyPress={handleKeyPress}
+      role="link"
       style={{
-        width: '200px',
-        margin: '10px'
+        cursor: 'pointer',
+        margin: '10px',
+        width: '200px'
       }}
+      tabIndex={position}
     >
       <img
+        alt={head}
+        src={img}
         style={{
           borderRadius: '7px'
         }}
-        src={img}
-        alt={head}
       />
       <div style={{ marginLeft: '10px' }}>
         <p
@@ -65,7 +85,7 @@ const Link = ({ pid, href, offer_id: offerId, img, head, loc, sub }) => (
         </p>
       </div>
     </div>
-  </a>
-);
+  );
+};
 
 export default Link;

@@ -1,6 +1,8 @@
 import React from 'react';
+import track from 'react-tracking';
+import { buildEvent } from '../events';
 
-const Link = ({ pid, href, offer_id: offerId, img, head, loc, position, sub }) => {
+const Link = ({ pid, href, offer_id: offerId, img, head, loc, position, sub, tracking }) => {
   const handleClick = () => {
     navigate();
   };
@@ -13,7 +15,8 @@ const Link = ({ pid, href, offer_id: offerId, img, head, loc, position, sub }) =
   };
 
   const navigate = () => {
-    window.location.href = `${href}?pid=${pid}`;
+    tracking.trackEvent({ action: 'offerClick' });
+    // window.location.href = `${href}?pid=${pid}`;
   };
 
   return (
@@ -88,4 +91,14 @@ const Link = ({ pid, href, offer_id: offerId, img, head, loc, position, sub }) =
   );
 };
 
-export default Link;
+export default track(
+  ({ position, offer_id: id, pid }) => ({
+    action: 'offerLoaded',
+    offer: {
+      id,
+      position
+    },
+    ...buildEvent(window, pid)
+  }),
+  { dispatchOnMount: true }
+)(Link);

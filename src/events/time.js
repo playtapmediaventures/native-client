@@ -4,10 +4,10 @@ class Time {
   }
 
   get timeZoneOffset() {
-    return `${this.date.getTimeZoneOffset() / -60.0}`;
+    return `${this.date.getTimezoneOffset() / -60.0}`;
   }
 
-  get value() {
+  get timestamp() {
     return this.date.getTime();
   }
 }

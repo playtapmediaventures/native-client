@@ -4,7 +4,7 @@ class Device {
   }
 
   get javaEnabled() {
-    return this.window.navigator.javaEnabled;
+    return this.window.navigator.javaEnabled();
   }
 
   get cookieEnabled() {

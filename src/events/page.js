@@ -1,6 +1,7 @@
 class Page {
-  constructor(_window) {
+  constructor(_window, pid = 'NOT_PROVIDED') {
     this.window = _window;
+    this.publisherId = `${pid}`;
   }
 
   get url() {
@@ -12,7 +13,11 @@ class Page {
   }
 
   get encoding() {
-    return this.window.document.encoding;
+    return this.window.document.inputEncoding;
+  }
+
+  get referrer() {
+    return this.window.document.referrer;
   }
 }
 

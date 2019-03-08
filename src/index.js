@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import track from 'react-tracking';
 
 import getPublisherId from './util/get-publisher-id';
 import getOptions from './service/get-options';

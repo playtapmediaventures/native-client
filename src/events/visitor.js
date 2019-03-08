@@ -1,9 +1,7 @@
 class Visitor {
   constructor(_window) {
-    const {
-      document: { cookie }
-    } = _window;
-    this.cookie = cookie;
+    const { document } = _window;
+    this.document = document;
   }
 
   static COOKIE_NAME = '_msclvr_native';
@@ -22,12 +20,13 @@ class Visitor {
     const d = new Date();
     d.setTime(d.getTime() + expiryDays * 1000 * 60 * 60 * 24);
     const expires = `expires=${d.toGMTString()}`;
-    this.cookie = `${name}=${value}; ${expires}`;
+    this.document.cookie = `${name}=${value}; ${expires}`;
+    console.log(this.document.cookie);
   }
 
   getCookie(name = Visitor.COOKIE_NAME) {
-    const cookies = decodeURIComponent(this.cookie).split(';');
-    const cookie = cookies.find(c => c.include(name)) || '';
+    const cookies = decodeURIComponent(this.document.cookie).split(';');
+    const cookie = cookies.find(c => c.includes(name)) || '';
 
     return cookie.replace(`${name}=`, '');
   }

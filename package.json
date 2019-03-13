@@ -90,6 +90,7 @@
     "kleur": "^3.0.2",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
+    "react-in-viewport": "0.0.37",
     "react-resize-detector": "^3.4.0",
     "react-scripts": "^2.1.5",
     "react-tracking": "^5.6.0",

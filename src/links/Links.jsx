@@ -13,6 +13,7 @@ const calculateResizeStyles = (allowedWidth = 1320, length) => {
   const remainder = allowedWidth - realWidth;
 
   return {
+    layout: `${colsToUse}x${6 / colsToUse}`,
     width: `${realWidth}px`,
     marginLeft: `${remainder / 2}px`
   };
@@ -20,8 +21,7 @@ const calculateResizeStyles = (allowedWidth = 1320, length) => {
 
 const Links = ({ pid, width, options }) => {
   const { length } = options;
-
-  const resizeStyles = calculateResizeStyles(width, length);
+  const { layout, ...resizeStyles } = calculateResizeStyles(width, length);
 
   return (
     <div
@@ -55,7 +55,13 @@ const Links = ({ pid, width, options }) => {
         />
       </p>
       {options.map((option, index) => (
-        <Link key={JSON.stringify(option)} pid={pid} position={index + 1} {...option} />
+        <Link
+          key={JSON.stringify(option)}
+          layout={layout}
+          pid={pid}
+          position={index + 1}
+          {...option}
+        />
       ))}
     </div>
   );

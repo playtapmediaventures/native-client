@@ -8,8 +8,8 @@ const generateOptions = () =>
     href: 'https://www.google.com',
     offer_id: `offer${i}`,
     img:
-      'https://media.ticketmaster.com/en-us/dam/a/889/730b3fe6-0831-4d69-ae67-1748413c6889_982471_EVENT_DETAIL_PAGE_16_9.jpg',
-    head: 'Cardi B.',
+      'https://media.ticketmaster.com/en-us/dam/a/375/9762c506-c0d5-479c-a022-6a1473c6b375_1008721_EVENT_DETAIL_PAGE_16_9.jpg',
+    head: "DMX - 20 Year Anniversary Tour - It's Dark and Hell is Hot",
     loc: 'Madison Square Garden',
     sub: `$99.9${i}`
   }));
@@ -19,8 +19,8 @@ storiesOf('Link', module).add('with a valid result', () => (
     href="https://www.google.com"
     pid={12345}
     offer_id="offerId"
-    img="https://media.ticketmaster.com/en-us/dam/a/889/730b3fe6-0831-4d69-ae67-1748413c6889_982471_EVENT_DETAIL_PAGE_16_9.jpg"
-    head="Cardi B."
+    img="https://media.ticketmaster.com/en-us/dam/a/375/9762c506-c0d5-479c-a022-6a1473c6b375_1008721_EVENT_DETAIL_PAGE_16_9.jpg"
+    head="DMX - 20 Year Anniversary Tour - It's Dark and Hell is Hot"
     position={0}
     loc="Madison Square Garden"
     sub="$99.99"

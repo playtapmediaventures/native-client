@@ -58,7 +58,8 @@
   },
   "eslintIgnore": [
     "coverage",
-    "node_modules"
+    "node_modules",
+    "util/pakoe_deflate"
   ],
   "prettier": {
     "printWidth": 100,
@@ -88,6 +89,7 @@
     "axios-jsonp": "^1.0.2",
     "fsevents": "^1.2.7",
     "kleur": "^3.0.2",
+    "pako": "^1.0.10",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
     "react-in-viewport": "0.0.37",

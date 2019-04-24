@@ -3,12 +3,12 @@ import handleViewport from 'react-in-viewport';
 
 const ONE_SECOND_IN_MILLISECONDS = 1000;
 
-export default function calculateViewability(WrappedComponent) {
+export default function withViewability(WrappedComponent) {
   const getDisplayName = () => WrappedComponent.displayName || WrappedComponent.name || 'Component';
 
   // eslint-disable-next-line react/prefer-stateless-function
   class ActiveViewComponent extends Component {
-    static displayName = `ActiveView${getDisplayName()}`;
+    static displayName = `withViewability(${getDisplayName()})`;
 
     constructor(props) {
       super(props);
@@ -16,7 +16,7 @@ export default function calculateViewability(WrappedComponent) {
       this.setImpressionTimer = this.setImpressionTimer.bind(this);
       this.clearImpressionTimer = this.clearImpressionTimer.bind(this);
       this.state = {
-        adViewable: false
+        isViewable: false
       };
     }
 
@@ -25,10 +25,10 @@ export default function calculateViewability(WrappedComponent) {
     }
 
     setImpressionTimer() {
-      const { adViewable } = this.state;
-      if (!this.impressionTimer && !adViewable) {
+      const { isViewable } = this.state;
+      if (!this.impressionTimer && !isViewable) {
         this.impressionTimer = setTimeout(
-          () => this.setState({ adViewable: true }),
+          () => this.setState({ isViewable: true }),
           ONE_SECOND_IN_MILLISECONDS
         );
       }
@@ -52,9 +52,9 @@ export default function calculateViewability(WrappedComponent) {
       this.manageImpressionTimer();
 
       const { inViewport, enterCount, leaveCount, ...rest } = this.props;
-      const { adViewable } = this.state;
+      const { isViewable } = this.state;
 
-      return <WrappedComponent adViewable={adViewable} {...rest} />;
+      return <WrappedComponent isViewable={isViewable} {...rest} />;
     }
   }
 

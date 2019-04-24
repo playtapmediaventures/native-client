@@ -1,23 +1,26 @@
 import Page from './page';
 import Device from './device';
-import Visitor from './visitor';
-import Time from './time';
+import L10n from './l10n';
 
-const buildEvent = (_window = window, pid) => {
-  const { id } = new Visitor(_window);
-  const { publisherId, url, title, encoding, referrer } = new Page(_window, pid);
+const buildEventMetadata = (publisherId = 'NOT_PROVIDED', _window = window) => {
+  const { url, title, encoding, referrer } = new Page(_window);
   const { colorDepth, viewport, resolution, javaEnabled, cookieEnabled } = new Device(_window);
-  const { timestamp, timeZoneOffset } = new Time();
+  const { locale, timeZone, timeZoneOffset } = new L10n();
 
   const event = {
-    visitor: { id },
-    page: { publisherId, url, title, encoding, referrer },
+    publisherId,
+    page: { url, title, encoding, referrer },
     device: { colorDepth, viewport, resolution, javaEnabled, cookieEnabled },
-    timestamp,
-    timeZoneOffset
+    l10n: { locale, timeZone, timeZoneOffset }
   };
 
   return event;
 };
 
-export { Page, Device, Visitor, Time, buildEvent };
+const createEvent = (action, eventData = {}) => ({
+  action,
+  ...eventData,
+  timestamp: new Date().getTime()
+});
+
+export { Page, Device, L10n, buildEventMetadata, createEvent };

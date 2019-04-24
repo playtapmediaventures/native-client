@@ -3,17 +3,19 @@ import { withResizeDetector } from 'react-resize-detector';
 
 import Link from './Link';
 
-const calculateResizeStyles = (allowedWidth = 1320, length) => {
+const calculateLayout = (colsToUse = 0) => (colsToUse ? `${colsToUse}x${6 / colsToUse}` : ``);
+
+const calculateResizeStyles = (allowedWidth = 1320, elements) => {
   const width = 220;
   const maxPossibleCols = Math.floor(allowedWidth / width);
   const possibilities = [1, 2, 3, 6];
-  const acceptableCols = possibilities.filter(p => length % p === 0 && p <= maxPossibleCols && p);
-  const colsToUse = acceptableCols.pop();
+  const acceptableCols = possibilities.filter(p => elements % p === 0 && p <= maxPossibleCols && p);
+  const colsToUse = acceptableCols.pop() || 0;
   const realWidth = colsToUse * width;
   const remainder = allowedWidth - realWidth;
 
   return {
-    layout: `${colsToUse}x${6 / colsToUse}`,
+    layout: calculateLayout(colsToUse),
     width: `${realWidth}px`,
     marginLeft: `${remainder / 2}px`
   };

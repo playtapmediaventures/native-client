@@ -1,7 +1,6 @@
 class Page {
-  constructor(_window, pid = 'NOT_PROVIDED') {
+  constructor(_window) {
     this.window = _window;
-    this.publisherId = `${pid}`;
   }
 
   get url() {

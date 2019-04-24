@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import track from 'react-tracking';
-import { buildEvent } from '../events';
-import calculateViewability from '../util/calculate-viewability';
+import { createEvent } from '../events';
+import withViewability from '../util/calculate-viewability';
+import { processEvents, publishEvent } from '../util/analytics';
 
 class Link extends Component {
   constructor(props) {
@@ -14,17 +15,20 @@ class Link extends Component {
   }
 
   _checkViewability() {
-    const { adViewable, tracking } = this.props;
-    if (adViewable && !this.impressionFired) {
-      tracking.trackEvent({ action: 'impression_viewable' });
+    const { isViewable, tracking } = this.props;
+    if (isViewable && !this.impressionFired) {
+      tracking.trackEvent(createEvent('slot_viewable'));
       this.impressionFired = true;
     }
   }
 
   _navigate() {
     const { href, pid, tracking } = this.props;
-    tracking.trackEvent({ action: 'slot_clicked' });
-    window.location.href = `${href}?pid=${pid}`;
+    tracking.trackEvent(createEvent('slot_clicked'));
+    processEvents(pid);
+    setTimeout(_ => {
+      window.location.href = `${href}?pid=${pid}`;
+    }, 500);
   }
 
   handleClick() {
@@ -118,14 +122,16 @@ class Link extends Component {
 }
 
 export default track(
-  ({ offer_id: id, layout, pid, position }) => ({
-    action: 'slot_loaded',
-    slot: {
-      id,
-      layout,
-      position
-    },
-    ...buildEvent(window, pid)
-  }),
-  { dispatchOnMount: true }
-)(calculateViewability(Link));
+  ({ offer_id: id, layout, pid, position }) =>
+    createEvent('slot_loaded', {
+      slot: {
+        id,
+        layout,
+        position
+      }
+    }),
+  {
+    dispatchOnMount: true,
+    dispatch: publishEvent
+  }
+)(withViewability(Link));

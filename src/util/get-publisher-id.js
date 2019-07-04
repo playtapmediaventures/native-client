@@ -23,7 +23,7 @@ const getParams = (scriptName = 'msclvr-native.min.js') => {
 };
 
 const getPublisherId = () => {
-  const { id } = getParams();
+  const { id = window.MSCLVR.testPid } = getParams();
   return id;
 };
 

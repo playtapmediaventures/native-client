@@ -3,16 +3,19 @@ import { withResizeDetector } from 'react-resize-detector';
 
 import Link from './Link';
 
-const calculateResizeStyles = (allowedWidth = 1320, length) => {
+const calculateLayout = (colsToUse = 0) => (colsToUse ? `${colsToUse}x${6 / colsToUse}` : ``);
+
+const calculateResizeStyles = (allowedWidth = 1320, elements) => {
   const width = 220;
   const maxPossibleCols = Math.floor(allowedWidth / width);
   const possibilities = [1, 2, 3, 6];
-  const acceptableCols = possibilities.filter(p => length % p === 0 && p <= maxPossibleCols && p);
-  const colsToUse = acceptableCols.pop();
+  const acceptableCols = possibilities.filter(p => elements % p === 0 && p <= maxPossibleCols && p);
+  const colsToUse = acceptableCols.pop() || 0;
   const realWidth = colsToUse * width;
   const remainder = allowedWidth - realWidth;
 
   return {
+    layout: calculateLayout(colsToUse),
     width: `${realWidth}px`,
     marginLeft: `${remainder / 2}px`
   };
@@ -20,8 +23,7 @@ const calculateResizeStyles = (allowedWidth = 1320, length) => {
 
 const Links = ({ pid, width, options }) => {
   const { length } = options;
-
-  const resizeStyles = calculateResizeStyles(width, length);
+  const { layout, ...resizeStyles } = calculateResizeStyles(width, length);
 
   return (
     <div
@@ -55,7 +57,13 @@ const Links = ({ pid, width, options }) => {
         />
       </p>
       {options.map((option, index) => (
-        <Link key={JSON.stringify(option)} pid={pid} position={index + 1} {...option} />
+        <Link
+          key={JSON.stringify(option)}
+          layout={layout}
+          pid={pid}
+          position={index + 1}
+          {...option}
+        />
       ))}
     </div>
   );

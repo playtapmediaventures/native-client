@@ -11,55 +11,6 @@
     "eject": "react-scripts eject",
     "storybook": "start-storybook -p 9001 -c .storybook"
   },
-  "eslintConfig": {
-    "env": {
-      "node": true,
-      "jest": true
-    },
-    "extends": [
-      "airbnb",
-      "prettier",
-      "prettier/react",
-      "react-app"
-    ],
-    "plugins": [
-      "prettier"
-    ],
-    "rules": {
-      "react/jsx-filename-extension": [
-        1,
-        {
-          "extensions": [
-            ".js",
-            ".jsx"
-          ]
-        }
-      ],
-      "react/prop-types": 0,
-      "no-underscore-dangle": 0,
-      "import/imports-first": [
-        "error",
-        "absolute-first"
-      ],
-      "import/newline-after-import": "error",
-      "prettier/prettier": [
-        "error"
-      ]
-    },
-    "globals": {
-      "window": true,
-      "document": true,
-      "localStorage": true,
-      "FormData": true,
-      "FileReader": true,
-      "Blob": true,
-      "navigator": true
-    }
-  },
-  "eslintIgnore": [
-    "coverage",
-    "node_modules"
-  ],
   "prettier": {
     "printWidth": 100,
     "singleQuote": true
@@ -91,7 +42,8 @@
     "react-dom": "^16.7.0",
     "react-resize-detector": "^3.4.0",
     "react-scripts": "^2.1.5",
-    "typescript": "^3.3.3333"
+    "typescript": "^3.3.3333",
+    "ycb": "^2.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.2.2",

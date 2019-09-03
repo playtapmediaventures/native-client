@@ -1,5 +1,7 @@
-# idea
-.idea/
+
+
+# storybook
+storybook-static/
 
 # package directories
 node_modules/
@@ -9,3 +11,6 @@ build/
 
 # files
 .DS_Store
+
+# IDEA
+.idea/

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import track from 'react-tracking';
 import { createEvent } from '../events';
 import withViewability from '../util/calculate-viewability';
@@ -12,100 +12,84 @@ const baseTextStyle = {
   color: '#4C2E47'
 };
 
-class Link extends Component {
-  constructor(props) {
-    super(props);
-    this.handleClick = this.handleClick.bind(this);
-    this.handleKeyPress = this.handleKeyPress.bind(this);
-    this._checkViewability = this._checkViewability.bind(this);
-    this._navigate = this._navigate.bind(this);
-    this.impressionFired = false;
+const checkViewability = ({ isViewable, tracking }, [impressionFired, setImpressionFired]) => {
+  if (isViewable && !impressionFired) {
+    tracking.trackEvent(createEvent('slot_viewable'));
+    setImpressionFired(true);
   }
+};
 
-  _checkViewability() {
-    const { isViewable, tracking } = this.props;
-    if (isViewable && !this.impressionFired) {
-      tracking.trackEvent(createEvent('slot_viewable'));
-      this.impressionFired = true;
-    }
-  }
+const navigate = ({ href, pid, tracking }) => {
+  tracking.trackEvent(createEvent('slot_clicked'));
+  processEvents(pid);
+  setTimeout(_ => {
+    window.location.href = `${href}?pid=${pid}`;
+  }, 500);
+};
 
-  _navigate() {
-    const { href, pid, tracking } = this.props;
-    tracking.trackEvent(createEvent('slot_clicked'));
-    processEvents(pid);
-    setTimeout(_ => {
-      window.location.href = `${href}?pid=${pid}`;
-    }, 500);
-  }
+const Link = props => {
+  const handleClick = () => navigate(props);
 
-  handleClick() {
-    this._navigate();
-  }
-
-  handleKeyPress({ keyCode, which }) {
+  const handleKeyPress = ({ keyCode, which }) => {
     const key = keyCode || which;
     if (key === 13 || key === 32) {
-      this._navigate();
+      navigate(props);
     }
-  }
+  };
 
-  render() {
-    this._checkViewability();
+  checkViewability(props, useState(false));
 
-    const { img, head, innerRef, loc, offer_id: offerId, position, sub } = this.props;
-
-    return (
-      <div
-        className="msclvrLinkItem"
-        key={offerId}
-        onClick={this.handleClick}
-        onKeyPress={this.handleKeyPress}
-        ref={innerRef}
-        role="link"
+  const { img, head, innerRef, loc, offer_id: offerId, position, sub } = props;
+  return (
+    <div
+      className="msclvrLinkItem"
+      key={offerId}
+      onClick={handleClick}
+      onKeyPress={handleKeyPress}
+      ref={innerRef}
+      role="link"
+      style={{
+        cursor: 'pointer',
+        margin: '10px',
+        width: '200px'
+      }}
+      tabIndex={position}
+    >
+      <img
+        alt={head}
+        src={img}
         style={{
-          cursor: 'pointer',
-          margin: '10px',
-          width: '200px'
+          borderRadius: '7px'
         }}
-        tabIndex={position}
-      >
-        <img
-          alt={head}
-          src={img}
+      />
+      <div style={{ marginLeft: '10px' }}>
+        <p
           style={{
-            borderRadius: '7px'
-          }}
-        />
-        <div style={{ marginLeft: '10px' }}>
-          <p
-            style={{
-              ...baseTextStyle,
-              fontSize: '16px',
-              fontWeight: 'bold',
-              whiteSpace: 'nowrap',
-              overflow: 'hidden',
-              textOverflow: 'ellipsis'
-            }}
-          >
-            {head}
-          </p>
-        </div>
-        <div
-          style={{
-            marginLeft: '10px',
-            marginRight: '10px',
-            marginBottom: '10px',
-            marginTop: '2px'
+            ...baseTextStyle,
+            fontSize: '16px',
+            fontWeight: 'bold',
+            whiteSpace: 'nowrap',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis'
           }}
         >
-          <p style={baseTextStyle}>{loc}</p>
-          <p style={baseTextStyle}>{sub}</p>
-        </div>
+          {head}
+        </p>
       </div>
-    );
-  }
-}
+      <div
+        style={{
+          marginLeft: '10px',
+          marginRight: '10px',
+          marginBottom: '10px',
+          marginTop: '2px'
+        }}
+      >
+        <p style={baseTextStyle}>{loc}</p>
+        <p style={baseTextStyle}>{sub}</p>
+      </div>
+    </div>
+  );
+};
 
 export default track(
   ({ offer_id: id, layout, pid, position }) =>

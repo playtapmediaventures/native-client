@@ -4,6 +4,14 @@ import { createEvent } from '../events';
 import withViewability from '../util/calculate-viewability';
 import { processEvents, publishEvent } from '../util/analytics';
 
+const baseTextStyle = {
+  fontSize: '12px',
+  fontFamily: 'Verdana, Geneva, sans-serif',
+  margin: '0px',
+  fontWeight: 'normal',
+  color: '#4C2E47'
+};
+
 class Link extends Component {
   constructor(props) {
     super(props);
@@ -72,14 +80,12 @@ class Link extends Component {
         <div style={{ marginLeft: '10px' }}>
           <p
             style={{
+              ...baseTextStyle,
               fontSize: '16px',
+              fontWeight: 'bold',
               whiteSpace: 'nowrap',
               overflow: 'hidden',
-              textOverflow: 'ellipsis',
-              fontWeight: 'bold',
-              fontFamily: 'Verdana, Geneva, sans-serif',
-              margin: '0px',
-              color: '#4C2E47'
+              textOverflow: 'ellipsis'
             }}
           >
             {head}
@@ -93,28 +99,8 @@ class Link extends Component {
             marginTop: '2px'
           }}
         >
-          <p
-            style={{
-              fontSize: '12px',
-              fontFamily: 'Verdana, Geneva, sans-serif',
-              margin: '0px',
-              fontWeight: 'normal',
-              color: '#4C2E47'
-            }}
-          >
-            {loc}
-          </p>
-          <p
-            style={{
-              fontSize: '12px',
-              fontFamily: 'Verdana, Geneva, sans-serif',
-              margin: '0px',
-              fontWeight: 'normal',
-              color: '#4C2E47'
-            }}
-          >
-            {sub}
-          </p>
+          <p style={baseTextStyle}>{loc}</p>
+          <p style={baseTextStyle}>{sub}</p>
         </div>
       </div>
     );

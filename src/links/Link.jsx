@@ -39,7 +39,7 @@ const Link = props => {
 
   checkViewability(props, useState(false));
 
-  const { img, head, innerRef, loc, offer_id: offerId, position, sub } = props;
+  const { img, head, innerRef, loc, offer_id: offerId, sub } = props;
   return (
     <div
       className="msclvrLinkItem"
@@ -53,7 +53,7 @@ const Link = props => {
         margin: '10px',
         width: '200px'
       }}
-      tabIndex={position}
+      tabIndex={0}
     >
       <img
         alt={head}
@@ -92,7 +92,7 @@ const Link = props => {
 };
 
 export default track(
-  ({ offer_id: id, layout, pid, position }) =>
+  ({ offer_id: id, layout, position }) =>
     createEvent('slot_loaded', {
       slot: {
         id,

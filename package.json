@@ -3,12 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "react-scripts start",
+    "start": "rescripts start",
     "start:prod": "serve -s build",
-    "build": "GENERATE_SOURCEMAP=false react-scripts build",
+    "build": "GENERATE_SOURCEMAP=false rescripts build",
     "deploy:staging": "node ./scripts/deploy.js",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
+    "test": "rescripts test",
+    "eject": "rescripts eject",
     "storybook": "start-storybook -p 9001 -c .storybook"
   },
   "prettier": {
@@ -44,15 +44,14 @@
     "react-in-viewport": "0.0.37",
     "react-resize-detector": "^3.4.0",
     "react-scripts": "3.0.1",
-    "react-tracking": "^7.1.0",
-    "typescript": "^3.6.2",
-    "ycb": "^2.0.1"
+    "react-tracking": "^7.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.5.5",
     "@storybook/react": "^5.1.11",
     "aws-sdk": "^2.521.0",
     "compression-webpack-plugin": "^2.0.0",
+    "es-abstract": "^1.14.1",
     "eslint-config-airbnb": "^17.1.1",
     "eslint-config-prettier": "^3.3.0",
     "eslint-plugin-import": "^2.18.2",
@@ -63,6 +62,7 @@
     "lint-staged": "^8.2.1",
     "mime-types": "^2.1.24",
     "prettier": "^1.18.2",
-    "pretty-quick": "^1.11.1"
+    "pretty-quick": "^1.11.1",
+    "@rescripts/cli": "^0.0.11"
   }
 }
